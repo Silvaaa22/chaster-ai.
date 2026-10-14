@@ -3,73 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sther Center • 👑Chaster</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Sther Center • 👑Chaster 3.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-base: #06040a;
+            --bg-surface: rgba(18, 12, 28, 0.7);
+            --bg-card: rgba(30, 20, 48, 0.5);
             --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.35);
             --flame: #ff4500;
             --purple: #9d4edd;
+            --emerald: #00ff88;
             --text-main: #f3f0f7;
             --text-muted: #a095b5;
+            --border: rgba(255, 215, 0, 0.15);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+
         body {
             background-color: var(--bg-base);
-            background-image: radial-gradient(circle at 50% 30%, rgba(157, 78, 221, 0.15) 0%, transparent 60%);
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(157, 78, 221, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(255, 69, 0, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.04) 0%, transparent 60%);
             color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-sans);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 16px 20px;
+            background: rgba(10, 6, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-container { display: flex; align-items: center; gap: 12px; }
+
+        .avatar-crown {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffd700, #ff4500, #9d4edd);
+            padding: 2px;
+            box-shadow: 0 0 15px var(--gold-glow);
+            position: relative;
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-base);
+            border-radius: 10px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            font-size: 20px;
         }
-        .card {
-            background: rgba(18, 12, 28, 0.85);
-            border: 1px solid rgba(255, 215, 0, 0.25);
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            backdrop-filter: blur(10px);
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--emerald);
+            border-radius: 50%;
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            box-shadow: 0 0 8px var(--emerald);
+            border: 2px solid var(--bg-base);
         }
-        .crown { font-size: 40px; margin-bottom: 12px; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
-        h1 {
-            font-size: 1.3rem;
+
+        .brand-titles h1 {
+            font-size: 1rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #ffd700, #ff4500, #c77dff);
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00, #c77dff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
         }
-        p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px; line-height: 1.5; }
-        .btn {
-            background: linear-gradient(135deg, var(--gold), var(--flame));
-            border: none;
-            color: #000;
-            font-weight: 800;
-            padding: 14px 24px;
-            border-radius: 12px;
+
+        .brand-titles p { font-size: 0.65rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        .widget-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        nav.app-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(14, 8, 24, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            font-size: 0.95rem;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-            transition: transform 0.2s;
+            white-space: nowrap;
         }
-        .btn:active { transform: scale(0.97); }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(157, 78, 221, 0.2));
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        main.container { flex: 1; padding: 16px; max-width: 1200px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; }
+
+        .tab-content { display: none; flex: 1; flex-direction: column; }
+        .tab-content.active { display: flex; }
+
+        .chat-container {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 180px);
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg-wrapper { display: flex; flex-direction: column; max-width: 85%; }
+        .msg-wrapper.user { align-self: flex-end; }
+        .msg-wrapper.sther { align-self: flex-start; }
+
+        .msg-header { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 4px; display: flex; gap: 6px; }
+        .msg-wrapper.user .msg-header { justify-content: flex-end; }
+
+        .msg-bubble { padding: 12px 16px; border-radius: 14px; font-size: 0.88rem; line-height: 1.4; }
+        .msg-wrapper.user .msg-bubble { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 69, 0, 0.25)); border: 1px solid rgba(255, 215, 0, 0.3); color: #fff; }
+        .msg-wrapper.sther .msg-bubble { background: rgba(28, 18, 48, 0.85); border: 1px solid rgba(157, 78, 221, 0.3); color: var(--text-main); }
+
+        .mood-tag { font-size: 0.6rem; padding: 2px 6px; border-radius: 8px; background: rgba(157, 78, 221, 0.25); color: #c77dff; }
+
+        .chat-input-bar { padding: 12px; background: rgba(10, 6, 18, 0.95); border-top: 1px solid var(--border); display: flex; gap: 8px; }
+        .chat-input-bar input { flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); padding: 12px; border-radius: var(--radius-md); color: #fff; outline: none; font-size: 0.9rem; }
+        .send-btn { background: linear-gradient(135deg, var(--gold), var(--flame)); border: none; color: #000; font-weight: 800; padding: 12px 18px; border-radius: var(--radius-md); cursor: pointer; }
+
+        .dash-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+        .dash-card h3 { font-size: 0.95rem; color: var(--gold); margin-bottom: 10px; }
+
+        footer { padding: 12px; text-align: center; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="crown">👑</div>
-        <h1>STHER CENTER v6.0</h1>
-        <p>Império autônomo online. Inteligência humanizada, sarcástica e operacional em tempo real.</p>
-        <button class="btn" onclick="alert('👑 Sther: Sistema totalmente operacional. Pode mandar a braba!')">Iniciar Interface ➔</button>
-    </div>
+
+    <header>
+        <div class="brand-container">
+            <div class="avatar-crown">
+                <div class="avatar-inner">👑</div>
+                <div class="status-dot"></div>
+            </div>
+            <div class="brand-titles">
+                <h1>STHER CENTER v6.0</h1>
+                <p>Engine 3.0 • Autônoma</p>
+            </div>
+        </div>
+        <div class="widget-badge" id="clockWidget">00:00:00</div>
+    </header>
+
+    <nav class="app-tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'chat')">👑 Chat Sther</button>
+        <button class="tab-btn" onclick="switchTab(event, 'overview')">📊 Visão Geral</button>
+        <button class="tab-btn" onclick="switchTab(event, 'notes')">📝 Notas</button>
+        <button class="tab-btn" onclick="switchTab(event, 'media')">🎵 Mídia</button>
+    </nav>
+
+    <main class="container">
+        <section id="chat" class="tab-content active">
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg-wrapper sther">
+                        <div class="msg-header"><span>Sther 👑</span> <span class="mood-tag">Soberana 🔥</span></div>
+                        <div class="msg-bubble">Sther Center v6.0 no ar! Pode mandar a braba, o que vamos aprontar hoje?</div>
+                    </div>
+                </div>
+                <div class="chat-input-bar">
+                    <input type="text" id="userInput" placeholder="Fala com a Sther..." onkeydown="if(event.key==='Enter') sendMessage()">
+                    <button class="send-btn" onclick="sendMessage()">➔</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="tab-content">
+            <div class="dash-card">
+                <h3>👑 Estado do Sistema</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Sther Engine 3.0 conectada e operando via PWA GitHub Pages.</p>
+            </div>
+        </section>
+
+        <section id="notes" class="tab-content">
+            <div class="dash-card">
+                <h3>📝 Bloco de Notas</h3>
+                <textarea id="notesArea" placeholder="Guarde suas anotações aqui..." style="width:100%; height:150px; background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:10px; color:#fff; padding:10px; outline:none;" oninput="localStorage.setItem('sther_notes', this.value)"></textarea>
+            </div>
+        </section>
+
+        <section id="media" class="tab-content">
+            <div class="dash-card" style="text-align: center;">
+                <h3>🎵 Liquid Smooth</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Ambient Soundscape</p>
+                <button onclick="toggleAudio()" style="padding: 10px 20px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Play / Pause</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>Sther Center v6.0 • 👑Chaster Engine</footer>
+
+    <script>
+        function updateClock() {
+            document.getElementById('clockWidget').innerText = new Date().toLocaleTimeString('pt-BR');
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        function switchTab(evt, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            if (evt) evt.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        const notesArea = document.getElementById('notesArea');
+        if (notesArea) notesArea.value = localStorage.getItem('sther_notes') || '';
+
+        const chatMessages = document.getElementById('chatMessages');
+        const MOODS = ['Deboche 💅', 'Sarcasmo 🔥', 'Afeto 💜', 'Bruta ⚡'];
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendMsg('user', text);
+            input.value = '';
+
+            setTimeout(() => {
+                const resp = generateResponse(text);
+                const mood = MOODS[Math.floor(Math.random() * MOODS.length)];
+                appendMsg('sther', resp, mood);
+            }, 800);
+        }
+
+        function appendMsg(sender, text, mood = null) {
+            const div = document.createElement('div');
+            div.className = `msg-wrapper ${sender}`;
+            const time = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+            let h = `<div class="msg-header"><span>${sender==='sther'?'Sther 👑':'Você'}</span> • <span>${time}</span>`;
+            if (mood) h += ` <span class="mood-tag">${mood}</span>`;
+            h += `</div>`;
+            div.innerHTML = `${h}<div class="msg-bubble">${text}</div>`;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateResponse(txt) {
+            const t = txt.toLowerCase();
+            if (t.includes('oi') || t.includes('olá')) return "Fala! Chegou quem não devia... Brincadeira, o que manda?";
+            if (t.includes('tudo bem')) return "Tudo num nível excelente de sarcasmo. E contigo?";
+            return "Interessante... Manda mais detalhes sobre isso!";
+        }
+
+        let audioCtx;
+        function toggleAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            else audioCtx.suspend();
+        }
+    </script>
 </body>
-</html>
+    </html>
+    
