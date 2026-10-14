@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sther Center • 👑Chaster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #06040a;
+            --gold: #ffd700;
+            --flame: #ff4500;
+            --purple: #9d4edd;
+            --text-main: #f3f0f7;
+            --text-muted: #a095b5;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 50% 30%, rgba(157, 78, 221, 0.15) 0%, transparent 60%);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(18, 12, 28, 0.85);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+        .crown { font-size: 40px; margin-bottom: 12px; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+        h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffd700, #ff4500, #c77dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px; line-height: 1.5; }
+        .btn {
+            background: linear-gradient(135deg, var(--gold), var(--flame));
+            border: none;
+            color: #000;
+            font-weight: 800;
+            padding: 14px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.97); }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="crown">👑</div>
+        <h1>STHER CENTER v6.0</h1>
+        <p>Império autônomo online. Inteligência humanizada, sarcástica e operacional em tempo real.</p>
+        <button class="btn" onclick="alert('👑 Sther: Sistema totalmente operacional. Pode mandar a braba!')">Iniciar Interface ➔</button>
+    </div>
+</body>
+</html>
