@@ -228,7 +228,7 @@
         <section id="overview" class="tab-content">
             <div class="dash-card">
                 <h3>👑 Estado do Sistema</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">OpenRouter Gemini Flash 2.0 Ativo.</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">OpenRouter Gemini Flash Ativo.</p>
             </div>
         </section>
 
@@ -242,9 +242,9 @@
         <section id="config" class="tab-content">
             <div class="dash-card">
                 <h3>🔑 Chave da API (OpenRouter)</h3>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Chave ativa:</p>
-                <input type="password" id="apiKeyInput" placeholder="Chave ativa no sistema..." style="width: 100%; padding: 10px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px; color: #fff; margin-bottom: 10px;" oninput="saveApiKey(this.value)">
-                <p style="font-size:0.7rem; color:var(--emerald);">Integração ativa e configurada.</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Cole a sua chave sk-or-... aqui:</p>
+                <input type="password" id="apiKeyInput" placeholder="Cole a sua chave aqui..." style="width: 100%; padding: 10px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px; color: #fff; margin-bottom: 10px;" oninput="saveApiKey(this.value)">
+                <p style="font-size:0.7rem; color:var(--emerald);">Guardada com segurança apenas no seu navegador.</p>
             </div>
         </section>
     </main>
@@ -267,11 +267,15 @@
         const notesArea = document.getElementById('notesArea');
         if (notesArea) notesArea.value = localStorage.getItem('sther_notes') || '';
 
-        const OPENROUTER_KEY = "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";
+        // Se ainda não houver chave salva, injeta automaticamente a nova chave fornecida
+        const initialKey = "Sk-or-v1-c4b0b855209cd2f013f21e5aefe22fe279cd859837d4f1f3b9b86d0ecd254cc5";
+        if (!localStorage.getItem('sther_gemini_key')) {
+            localStorage.setItem('sther_gemini_key', initialKey);
+        }
 
         const apiKeyInput = document.getElementById('apiKeyInput');
         if (apiKeyInput) {
-            apiKeyInput.value = OPENROUTER_KEY;
+            apiKeyInput.value = localStorage.getItem('sther_gemini_key');
         }
 
         function saveApiKey(val) {
@@ -294,7 +298,12 @@
             const mood = MOODS[Math.floor(Math.random() * MOODS.length)];
             const tempBubble = appendMsg('sther', 'A pensar...', mood);
 
-            const activeKey = localStorage.getItem('sther_gemini_key') || OPENROUTER_KEY;
+            const activeKey = localStorage.getItem('sther_gemini_key');
+
+            if (!activeKey) {
+                tempBubble.querySelector('.msg-bubble').innerText = "⚠️ Insira a chave na aba '⚙️ Config API'.";
+                return;
+            }
 
             try {
                 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
