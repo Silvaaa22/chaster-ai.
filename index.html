@@ -215,7 +215,7 @@
                 <div class="chat-messages" id="chatMessages">
                     <div class="msg-wrapper sther">
                         <div class="msg-header"><span>Sther 👑</span> <span class="mood-tag">Soberana 🔥</span></div>
-                        <div class="msg-bubble">Sther Center v6.0 online! Manda a mensagem!</div>
+                        <div class="msg-bubble">Sther Center v6.0 pronto! Manda a mensagem!</div>
                     </div>
                 </div>
                 <div class="chat-input-bar">
@@ -228,7 +228,7 @@
         <section id="overview" class="tab-content">
             <div class="dash-card">
                 <h3>👑 Estado do Sistema</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Sincronizado via OpenRouter.</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Conectado à OpenRouter.</p>
             </div>
         </section>
 
@@ -290,7 +290,6 @@
             const mood = MOODS[Math.floor(Math.random() * MOODS.length)];
             const tempBubble = appendMsg('sther', 'A pensar...', mood);
 
-            // Lê a chave diretamente do input ou do localStorage para garantir que nunca vai vazia
             const apiKey = (document.getElementById('apiKeyInput').value || localStorage.getItem('sther_gemini_key') || '').trim();
 
             if (!apiKey) {
@@ -298,7 +297,6 @@
                 return;
             }
 
-            // Guarda automaticamente para garantir persistência
             localStorage.setItem('sther_gemini_key', apiKey);
 
             try {
@@ -311,7 +309,7 @@
                         'X-Title': 'Sther Center'
                     },
                     body: JSON.stringify({
-                        model: "google/gemini-flash-1.5",
+                        model: "google/gemini-2.0-flash-001",
                         messages: [
                             { role: "system", content: "Tu és a Sther, uma IA soberana, ligeiramente sarcástica, bem-humorada e inteligente. Responde de forma direta e curta." },
                             { role: "user", content: text }
@@ -323,7 +321,7 @@
                 if (data.choices && data.choices[0] && data.choices[0].message) {
                     tempBubble.querySelector('.msg-bubble').innerText = data.choices[0].message.content;
                 } else if (data.error) {
-                    tempBubble.querySelector('.msg-bubble').innerText = "Erro OpenRouter: " + (data.error.message || "Erro desconhecido.");
+                    tempBubble.querySelector('.msg-bubble').innerText = "Erro: " + (data.error.message || "Falha na chamada.");
                 } else {
                     tempBubble.querySelector('.msg-bubble').innerText = "Erro ao processar a resposta.";
                 }
