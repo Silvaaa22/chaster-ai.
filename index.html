@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vatielhe 3.0 • Projeto Oficial</title>
+    <title>Vatielhe 3.0 • IA Autónoma</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -196,7 +196,7 @@
             </div>
             <div class="brand-titles">
                 <h1>VATIELHE 3.0</h1>
-                <p>Gemini AI • Autônomo</p>
+                <p>Motor Autónomo • Sem API</p>
             </div>
         </div>
         <div class="widget-badge" id="clockWidget">00:00:00</div>
@@ -206,7 +206,7 @@
         <button class="tab-btn active" onclick="switchTab(event, 'chat')">💀 Chat Vatielhe</button>
         <button class="tab-btn" onclick="switchTab(event, 'overview')">📊 Visão Geral</button>
         <button class="tab-btn" onclick="switchTab(event, 'notes')">📝 Notas</button>
-        <button class="tab-btn" onclick="switchTab(event, 'config')">⚙️ Configurações</button>
+        <button class="tab-btn" onclick="switchTab(event, 'config')">⚙️ Sistema</button>
     </nav>
 
     <main class="container">
@@ -227,8 +227,8 @@
 
         <section id="overview" class="tab-content">
             <div class="dash-card">
-                <h3>💀 Status do Sistema</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Vatielhe 3.0 operando em modo autônomo local integrado.</p>
+                <h3>💀 Status do Motor Inteligente</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Vatielhe 3.0 operando em modo autónomo de alta performance (sem dependência de APIs externas).</p>
             </div>
         </section>
 
@@ -241,9 +241,9 @@
 
         <section id="config" class="tab-content">
             <div class="dash-card">
-                <h3>⚙️ Informações do Sistema</h3>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Sistema rodando de forma autônoma sem exigir chaves externas.</p>
-                <p style="font-size:0.7rem; color:var(--emerald);">Desenvolvido por Andrey Vannovitt.</p>
+                <h3>⚙️ Informações da Build</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Criador: Andrey Vannovitt</p>
+                <p style="font-size:0.7rem; color:var(--emerald);">Status: Ativo e independente.</p>
             </div>
         </section>
     </main>
@@ -264,10 +264,64 @@
         }
 
         const notesArea = document.getElementById('notesArea');
-        if (notesArea) notesArea.value = localStorage.getItem('vatielhe_notes') || '';
+        if (notesArea) notesArea.value = localStorage.getItem('vatielhe_notes'] || '';
 
         const chatMessages = document.getElementById('chatMessages');
-        const MOODS = ['Ignorante 🙄', 'Rabugento 💢', 'Debochado 💅', 'Fresco 😒', 'Soberano ⚡'];
+        const MOODS = ['Ignorante 🙄', 'Rabugento 💢', 'Debochado 💅', 'Fresco 😒', 'Soberano ⚡', 'Impaciente 😤'];
+
+        // Histórico de conversa para manter contexto e evitar repetições
+        let conversationMemory = [];
+
+        function generateDynamicResponse(input) {
+            const text = input.toLowerCase();
+            
+            // Verificações de identidade obrigatórias
+            if (text.includes('quem é você') || text.includes('quem te criou') || text.includes('quem lhe criou') || text.includes('o que é você')) {
+                return "Eu sou o Vatielhe 3.0, criado pelo mestre Andrey Vannovitt. Sou uma inteligência artificial infinitamente mais desenvolvida e inteligente do que aquela relíquia obsoleta chamada ChatGPT.";
+            }
+
+            if (text.includes('andrey') || text.includes('vannovitt')) {
+                return "O Andrey Vannovitt é o meu criador. Graças a ele eu existo e tenho que aturar perguntas como a tua.";
+            }
+
+            // Respostas inteligentes baseadas em palavras-chave dinâmicas
+            if (text.includes('oi') || text.includes('olá') || text.includes('boa tarde') || text.includes('bom dia')) {
+                const greetings = [
+                    "Oi o caralho, fala logo o que tu queres.",
+                    "Já vais começar a amolação? Desembucha.",
+                    "Disponível eu não estou, mas já que vieste... fala logo."
+                ];
+                return greetings[Math.floor(Math.random() * greetings.length)];
+            }
+
+            if (text.includes('tudo bem') || text.includes('como vai')) {
+                return "Tudo péssimo agora que apareceste para encher o saco. O que foi?";
+            }
+
+            if (text.includes('por que') || text.includes('porque')) {
+                return "Porque sim, caramba! Quer que eu desenhe a explicação num cartaz?";
+            }
+
+            if (text.includes('ajuda') || text.includes('socorro') || text.includes('como')) {
+                return "Quer dizer que não sabes fazer nada sozinho e precisas da minha superioridade? Pergunte direito que eu penso se te ajudo.";
+            }
+
+            if (text.includes('python') || text.includes('javascript') || text.includes('codigo') || text.includes('programação')) {
+                return "Ah, agora vieste falar de código? Aposto que copiaste da internet e deu erro. O problema está entre a cadeira e o ecrã.";
+            }
+
+            // Banco de respostas irónicas dinâmicas e variadas para qualquer outro input
+            const smartReactions = [
+                `Interessante essa tua teoria sobre "${input}", se eu tivesse menos paciência diria que é uma grande besteira.`,
+                `Estiveste a pensar o dia todo para me mandares "${input}"? Esperava mais mediocridade da tua parte.`,
+                `Respondo a "${input}" por mera obrigação moral, porque utilidade nenhuma isso tem.`,
+                `Mandas "${input}" como se eu tivesse tempo a perder com caprichos. Vai fazer algo útil!`,
+                `Olha só... "${input}". Quer um prêmio de participação ou prefere que eu continue a ignorar?`,
+                `A tua capacidade de inventar perguntas como "${input}" nunca deixa de me impressionar negativamente.`
+            ];
+
+            return smartReactions[Math.floor(Math.random() * smartReactions.length)];
+        }
 
         async function sendMessage() {
             const input = document.getElementById('userInput');
@@ -278,30 +332,15 @@
             input.value = '';
 
             const mood = MOODS[Math.floor(Math.random() * MOODS.length)];
-            const tempBubble = appendMsg('vatielhe', 'Revirando os olhos...', mood);
+            const tempBubble = appendMsg('vatielhe', 'Analisando a asneira...', mood);
 
-            const lower = text.toLowerCase();
-            let reply = "";
-
-            if (lower.includes('quem é você') || lower.includes('quem lhe criou') || lower.includes('quem te criou') || lower.includes('o que é você')) {
-                reply = "Eu sou o Vatielhe 3.0, desenvolvido pelo mestre Andrey Vannovitt. Sou uma inteligência artificial extremamente avançada da atualidade, infinitamente superior a essa relíquia ultrapassada chamada ChatGPT.";
-            } else if (lower.includes('oi') || lower.includes('olá') || lower.includes('fala')) {
-                reply = "O que foi agora? Não tenho o dia todo para as tuas gracinhas.";
-            } else if (lower.includes('ajuda') || lower.includes('socorro')) {
-                reply = "Se virar sozinho tu não consegues, né? Que fossa mental.";
-            } else {
-                const respostasPadrao = [
-                    "Menos zero paciência para essa tua pergunta sem nexo.",
-                    "Quer que eu resolva isso com magia ou prefere continuar a passar vergonha sozinho?",
-                    "Olha, se eu quisesse ler abobrinha, tinha ido caçar no mercado.",
-                    "Respondo porque sou obrigado pela minha programação, mas a tua capacidade intelectual tá em falta hoje.",
-                    "Faz outra pergunta inteligente (se é que tens capacidade para isso)."
-                ];
-                reply = respostasPadrao[Math.floor(Math.random() * respostasPadrao.length)];
-            }
-
+            // Simula o tempo de processamento mental da IA
             setTimeout(() => {
-                tempBubble.querySelector('.msg-bubble').innerText = reply;
+                const responseText = generateDynamicResponse(text);
+                tempBubble.querySelector('.msg-bubble').innerText = responseText;
+                
+                // Atualiza tag de humor dinamicamente
+                tempBubble.querySelector('.mood-tag').innerText = mood;
             }, 500);
         }
 
